@@ -6,4 +6,4 @@ Use the `AZURE_STORAGE_CONTAINER` env var to select the container from which to 
 
 Note that the script will NOT run if the postgres_data directory already contains a database. This is exactly as we want to behave, as we only need to restore the DB if it does not exist.
 
-Make sure the `AZURE_STORAGE_KEY` and `AZURE_STORAGE_ACCOUNT` env vars are set with appropriate values so that the script can download the dump.
+Make sure the `AZURE_STORAGE_KEY` and `AZURE_STORAGE_ACCOUNT` env vars are set with appropriate values so that the script can access the dump.
