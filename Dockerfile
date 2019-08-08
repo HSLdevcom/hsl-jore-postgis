@@ -1,4 +1,4 @@
-FROM mdillon/postgis:10
+FROM mdillon/postgis:11
 
 RUN apt update && apt install -y curl jq
 
