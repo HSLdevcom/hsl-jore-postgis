@@ -8,12 +8,12 @@ account_secret=/run/secrets/AZURE_STORAGE_ACCOUNT
 # Check if the credentials exist.
 
 if [ ! -f $key_secret ]; then
-  echo "Azure key not set. Fonts not downloaded."
+  echo "Azure key not set. Dump not downloaded."
   exit 0
 fi
 
 if [ ! -f $account_secret ]; then
-  echo "Azure account not set. Fonts not downloaded."
+  echo "Azure account not set. Dump not downloaded."
   exit 0
 fi
 
