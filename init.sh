@@ -24,6 +24,12 @@ AZURE_STORAGE_ACCOUNT=$(<$account_secret)
 container_name=${AZURE_STORAGE_CONTAINER:=joredumps}
 
 blob_name=$(az storage blob list --container-name $container_name --prefix jore_dump_ --account-name $AZURE_STORAGE_ACCOUNT --account-key $AZURE_STORAGE_KEY | jq -r 'sort_by(.properties.lastModified)[-1].name')
+
+if [ $blob_name = "null" ]; then
+  echo "Dump not found. Exiting."
+  exit 0;
+fi
+
 echo $blob_name
 
 blob_path=/tmp/${blob_name}

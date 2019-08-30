@@ -9,3 +9,7 @@ RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 # It needs to run after Postgis's init script.
 COPY ./init.sh /docker-entrypoint-initdb.d/y_init.sh
 COPY ./init.sql /docker-entrypoint-initdb.d/z_init.sql
+
+# Option to build without the jorestatic functions (for the jore-history db)
+ARG INCLUDE_JORE_STATIC=true
+RUN if [ "$INCLUDE_JORE_STATIC" = "false" ] ; then rm /docker-entrypoint-initdb.d/z_init.sql ; fi
