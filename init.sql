@@ -1,4 +1,6 @@
-create schema if not exists jorestatic;
+CREATE SCHEMA IF NOT EXISTS jore;
+CREATE SCHEMA IF NOT EXISTS jorestatic;
+GRANT ALL ON SCHEMA jore TO CURRENT_USER;
 GRANT ALL ON SCHEMA jorestatic TO CURRENT_USER;
 
 -- Creating empty table to keep postgres happy
