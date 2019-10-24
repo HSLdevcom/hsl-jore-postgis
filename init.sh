@@ -30,19 +30,21 @@ if [ $blob_name = "null" ]; then
   exit 0;
 fi
 
-echo $blob_name
+echo "Latest dump found in container: ${container_name} is: ${blob_name}"
 
 blob_path=/tmp/${blob_name}
 
 if [ ! -f "$blob_path" ]; then
+  echo "Downloading dump to file: ${blob_path}"
   az storage blob download --container-name $container_name --file $blob_path --name $blob_name --account-name $AZURE_STORAGE_ACCOUNT --account-key $AZURE_STORAGE_KEY
 fi
 
 export PGPASSWORD=$POSTGRES_PASSWORD
 
 if [ -f "$blob_path" ]; then
+  echo "Started database restore from dump file: ${blob_path}"
   pg_restore -c --if-exists --no-owner -U postgres -d postgres --single-transaction $blob_path
-  echo "Restore complete!"
+  echo "Database restore complete!"
 else
   echo "Nothing downloaded or restored."
 fi
