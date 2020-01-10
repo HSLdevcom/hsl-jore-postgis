@@ -7,19 +7,19 @@ account_secret=/run/secrets/AZURE_STORAGE_ACCOUNT
 
 # Check if the credentials exist.
 
-if [ ! -f $key_secret ]; then
+if [ ! -f $key_secret ] && [ ! -v AZURE_STORAGE_KEY ]; then
   echo "Azure key not set. Dump not downloaded."
   exit 0
 fi
 
-if [ ! -f $account_secret ]; then
+if [ ! -f $account_secret ] && [ ! -v AZURE_STORAGE_ACCOUNT ]; then
   echo "Azure account not set. Dump not downloaded."
   exit 0
 fi
 
-# Read the credentials so AZ CLI may use them.
-AZURE_STORAGE_KEY=$(<$key_secret)
-AZURE_STORAGE_ACCOUNT=$(<$account_secret)
+# Read the credentials so AZ CLI may use them. If no env variable is set use Docker secrets.
+AZURE_STORAGE_KEY=${AZURE_STORAGE_KEY:-$(<$key_secret)}
+AZURE_STORAGE_ACCOUNT=${AZURE_STORAGE_ACCOUNT:-$(<$account_secret)}
 
 container_name=${AZURE_STORAGE_CONTAINER:=joredumps}
 
