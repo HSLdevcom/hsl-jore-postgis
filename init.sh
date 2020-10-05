@@ -39,7 +39,7 @@ if [ ! -f "$blob_path" ]; then
   az storage blob download --container-name $container_name --file $blob_path --name $blob_name --account-name $AZURE_STORAGE_ACCOUNT --account-key $AZURE_STORAGE_KEY
 fi
 
-export PGPASSWORD=$POSTGRES_PASSWORD
+export PGPASSWORD=/run/secrets/POSTGRES_PASSWORD
 
 if [ -f "$blob_path" ]; then
   echo "Started database restore from dump file: ${blob_path}"
