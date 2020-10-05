@@ -39,7 +39,13 @@ if [ ! -f "$blob_path" ]; then
   az storage blob download --container-name $container_name --file $blob_path --name $blob_name --account-name $AZURE_STORAGE_ACCOUNT --account-key $AZURE_STORAGE_KEY
 fi
 
-export PGPASSWORD=/run/secrets/POSTGRES_PASSWORD
+# Initially read postgresql password from docker secrets. If it cannot be found use one from env variable.
+pg_password=/run/secrets/POSTGRES_PASSWORD
+if [ ! -f $pg_password ]; then
+  pg_password=$POSTGRES_PASSWORD
+fi
+
+export PGPASSWORD=$pg_password
 
 if [ -f "$blob_path" ]; then
   echo "Started database restore from dump file: ${blob_path}"
