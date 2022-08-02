@@ -16,6 +16,17 @@ CREATE TABLE IF NOT EXISTS jorestatic.intermediate_points
     tag       date
 );
 
+CREATE TABLE IF NOT EXISTS jorestatic.intermediate_points_status
+(
+	"name" varchar(255) NOT NULL,
+	target_date date NOT NULL,
+	status text NULL,
+	created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT intermediate_points_status_pkey PRIMARY KEY (name),
+	CONSTRAINT intermediate_points_status_status_check CHECK ((status = ANY (ARRAY['READY'::text, 'PENDING'::text, 'ERROR'::text, 'EMPTY'::text])))
+);
+
 CREATE OR REPLACE FUNCTION jorestatic.create_intermediate_points(date date) RETURNS VOID AS
 $$
 DELETE FROM jorestatic.intermediate_points;
