@@ -1,5 +1,8 @@
 # HSL Jore postgis
 
+⚠️ **This repository has been deprecated. Use [jore-graphql-import](github.com/HSLdevcom/jore-graphql-import) to set up Jore database.** ⚠️
+
+
 This is basically the [mdillon/postgis](https://hub.docker.com/r/mdillon/postgis/) image, but with an added init script that downloads the latest dump from Azure blob storage and restores it into the database on startup.
 
 Use the `AZURE_STORAGE_CONTAINER` env var to select the container from which to get the dump. It defaults to `joredumps`. The script will then select the newest blob available in that container and feed it to `pg_restore`.
